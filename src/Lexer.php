@@ -14,7 +14,7 @@ final class Lexer
 {
     /**
      * @param Peekable<string> $chars
-     * @return iterable<int, Token | string | float | int | bool>
+     * @return iterable<int, Token | string | float | int>
      */
     public static function lex(Peekable $chars): iterable
     {

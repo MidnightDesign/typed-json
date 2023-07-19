@@ -8,7 +8,7 @@ use Iterator;
 use LogicException;
 
 /**
- * @template T
+ * @template-covariant T
  */
 final class Peekable
 {
@@ -19,8 +19,6 @@ final class Peekable
     /** @var T | null */
     private mixed $next;
     public int $index = 0;
-    /** @var list<T | null> */
-    private array $history = [];
 
     /**
      * @param iterable<mixed, T> $stream
@@ -29,7 +27,6 @@ final class Peekable
     {
         $this->stream = $stream instanceof Iterator ? $stream : self::toIterator($stream);
         $this->current = $this->currentStreamValue();
-        $this->history[] = $this->current;
         $this->stream->next();
         $this->next = $this->currentStreamValue();
     }
@@ -48,7 +45,6 @@ final class Peekable
     public function next(): void
     {
         $this->current = $this->next;
-        $this->history[] = $this->current;
         $this->stream->next();
         $this->next = $this->currentStreamValue();
         $this->index++;

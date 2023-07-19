@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace TypedJson;
 
+use Stringable;
 use UnexpectedValueException;
 
 use function get_debug_type;
@@ -22,11 +23,11 @@ use function sprintf;
 final class Parser
 {
     /**
-     * @param PeekableTokens $tokens
      * @return JsonNode
      */
-    public static function parse(Peekable $tokens): JsonObject|string|bool|int|float|null|array
+    public static function parse(string|Stringable $json): JsonObject|string|bool|int|float|null|array
     {
+        $tokens = Lexer::lex(new Peekable(str_split((string)$json)));
         return self::parseNode(new Peekable(self::skipWhitespace($tokens)));
     }
 
@@ -69,17 +70,12 @@ final class Parser
 
     /**
      * @template T
-     * @param Peekable<T> $tokens
+     * @param iterable<mixed, T> $tokens
      * @return iterable<int, T>
      */
-    private static function skipWhitespace(Peekable $tokens): iterable
+    private static function skipWhitespace(iterable $tokens): iterable
     {
-        while (true) {
-            $token = $tokens->current();
-            if ($token === null) {
-                break;
-            }
-            $tokens->next();
+        foreach ($tokens as $token) {
             if ($token === Token::WhiteSpace) {
                 continue;
             }
