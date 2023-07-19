@@ -1,0 +1,20 @@
+{
+  "require": {
+    "php": "^8.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "TypedJson\\": "src/"
+    }
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.18",
+    "phpstan/phpstan": "^1.10",
+    "vimeo/psalm": "^5.12"
+  },
+  "scripts": {
+    "cs-fix": "vendor/bin/php-cs-fixer fix",
+    "phpstan": "vendor/bin/phpstan analyse",
+    "psalm": "vendor/bin/psalm"
+  }
+}

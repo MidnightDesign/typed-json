@@ -1,0 +1,7 @@
+parameters:
+    phpVersion: 80100
+    paths:
+        - src
+    level: max
+includes:
+    - vendor/phpstan/phpstan/conf/bleedingEdge.neon
